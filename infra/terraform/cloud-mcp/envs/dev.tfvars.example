@@ -1,0 +1,8 @@
+name_prefix = "cloudmcp-dev"
+location    = "eastus2"
+
+tags = {
+  environment = "dev"
+  owner       = "security-platform"
+  workload    = "cloud-mcp"
+}

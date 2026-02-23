@@ -1,0 +1,12 @@
+# Default owner for all changes (replace with your org team when available).
+* @jerijuar
+
+# Terraform changes require infra ownership review.
+infra/terraform/** @jerijuar
+
+# Application code changes require app ownership review.
+app/** @jerijuar
+
+# Workflow/policy changes require platform ownership review.
+.github/** @jerijuar
+

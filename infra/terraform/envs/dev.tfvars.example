@@ -1,0 +1,8 @@
+name_prefix = "multiagent-dev"
+location    = "eastus2"
+
+tags = {
+  environment = "dev"
+  owner       = "security-platform"
+  cost_center = "dfir"
+}
