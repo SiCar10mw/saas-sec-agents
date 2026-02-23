@@ -23,6 +23,8 @@ Azure-first multi-agent DFIR/malware analysis architecture scaffold using:
 - `docs/change-control.md`: release/change management runbook
 - `docs/sift-worker-runbook.md`: SIFT image and worker lifecycle runbook
 - `docs/sample-data-catalog.md`: approved evidence/sample data model and handling rules
+- `docs/agents/brutal-critic-agent.md`: hardline review agent spec for plan critiques
+- `docs/templates/brutal-critic-review-template.md`: standard report format for critique results
 - `CHANGELOG.md`: required ledger for all notable changes
 
 ## If You Do Not Have an Azure Tenant Yet
@@ -94,3 +96,4 @@ docs/
 3. Follow `docs/change-control.md` for release validation (RV) and backout.
 4. Follow `docs/secure-coding-standard.md` and complete PR template fields.
 5. Require status checks: `security-checks` and `pr-inline-review`.
+6. For architecture/phase changes, attach brutal-critic review output.

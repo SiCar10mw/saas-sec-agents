@@ -12,12 +12,14 @@ Provide a repeatable process so releases are traceable and reversible.
 2. `CHANGELOG.md` updated in `[Unreleased]`.
 3. Terraform plan attached for infra changes.
 4. Approval from at least one reviewer outside the author.
+5. For phase or architecture changes, run `docs/agents/brutal-critic-agent.md` and attach results using `docs/templates/brutal-critic-review-template.md`.
 
 ## Release Process
 1. Merge PR to main after checks pass.
 2. Trigger `terraform-apply` workflow in `dev`.
 3. Execute RV checks and record results.
 4. Promote to next environment only after RV sign-off.
+5. If brutal-critic verdict is `reject`, promotion is blocked.
 
 ## Rollback Process
 1. Identify last known-good git tag/commit.
@@ -48,4 +50,3 @@ cd infra/terraform\nterraform plan -var-file=envs/dev.tfvars
   - `v0.1.0` foundation
   - `v0.2.0` provider integration
   - `v0.3.0` Copilot integration
-

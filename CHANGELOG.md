@@ -41,6 +41,10 @@ This project follows a simple changelog format and semantic versioning intent:
   - `docs/cloud-mcp-architecture.md`
   - role-scoped policy files (`config/role_model_policy.yaml`, `config/role_tool_policy.yaml`)
   - orchestrator policy enforcement for model routing and tool authorization
+- Brutal-critic governance assets added:
+  - `docs/agents/brutal-critic-agent.md`
+  - `docs/templates/brutal-critic-review-template.md`
+  - change-control requirement to run brutal-critic for phase/architecture changes
 
 ## [0.1.0] - 2026-02-23
 
