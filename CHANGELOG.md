@@ -45,6 +45,13 @@ This project follows a simple changelog format and semantic versioning intent:
   - `docs/agents/brutal-critic-agent.md`
   - `docs/templates/brutal-critic-review-template.md`
   - change-control requirement to run brutal-critic for phase/architecture changes
+- CSA SSCF-aligned SaaS baseline foundation added:
+  - `docs/saas-baseline/README.md`
+  - `docs/saas-baseline/sscf-mapping-method.md`
+  - platform control catalogs:
+    - `config/saas_baseline_controls/salesforce.yaml`
+    - `config/saas_baseline_controls/servicenow.yaml`
+    - `config/saas_baseline_controls/workday.yaml`
 
 ## [0.1.0] - 2026-02-23
 
