@@ -71,6 +71,11 @@ This project follows a simple changelog format and semantic versioning intent:
   - `config/oscal-salesforce/sbs_to_sscf_mapping.yaml`
   - `scripts/oscal_import_sbs.py`
   - `scripts/oscal_gap_map.py`
+- Security hardening and QA/QC improvements:
+  - `app/main.py` adds strict request model (`extra='forbid'`) and HTTP request size guard.
+  - `scripts/oscal_gap_map.py` adds `mapping_confidence` in mapped artifacts and summary counts.
+  - `scripts/oscal_smoke_test.sh` adds one-command import/map smoke test.
+  - `.github/workflows/security-checks.yml` adds `tfsec` and `checkov` scans for Terraform.
 
 ## [0.1.0] - 2026-02-23
 

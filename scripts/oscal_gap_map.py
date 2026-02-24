@@ -66,17 +66,18 @@ def _to_markdown(
         f"- not_applicable: `{summary['not_applicable']}`",
         "",
         "## Control Mapping Table",
-        "| Legacy Control ID | SBS Control ID | SBS Title | SSCF Controls | Status | Severity | Owner | Due Date |",
-        "|---|---|---|---|---|---|---|---|",
+        "| Legacy Control ID | SBS Control ID | SBS Title | Mapping Confidence | SSCF Controls | Status | Severity | Owner | Due Date |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
 
     for item in mapped_items:
         sscf_controls = ", ".join(item.get("sscf_control_ids", []))
         lines.append(
-            "| {legacy} | {sbs} | {title} | {sscf} | {status} | {severity} | {owner} | {due} |".format(
+            "| {legacy} | {sbs} | {title} | {confidence} | {sscf} | {status} | {severity} | {owner} | {due} |".format(
                 legacy=item.get("legacy_control_id", ""),
                 sbs=item.get("sbs_control_id", ""),
                 title=item.get("sbs_title", "").replace("|", "/"),
+                confidence=item.get("mapping_confidence", "unrated"),
                 sscf=sscf_controls,
                 status=item.get("status", ""),
                 severity=item.get("severity", ""),
@@ -181,6 +182,7 @@ def main() -> int:
                 "remediation": finding.get("remediation", ""),
                 "evidence_ref": finding.get("evidence_ref", ""),
                 "mapping_notes": map_row.get("notes", ""),
+                "mapping_confidence": map_row.get("mapping_confidence", "unrated"),
                 "sscf_mappings": sscf_overrides.get(sbs_control_id)
                 or sscf_defaults_by_category.get(sbs.get("category", ""))
                 or [],
@@ -207,6 +209,10 @@ def main() -> int:
             "unmapped_findings": len(unmapped_items),
             "invalid_mapping_entries": len(invalid_mapping_entries),
             "status_counts": _status_summary(mapped_items),
+            "mapping_confidence_counts": {
+                confidence: sum(1 for item in mapped_items if item.get("mapping_confidence") == confidence)
+                for confidence in sorted({item.get("mapping_confidence", "unrated") for item in mapped_items})
+            },
         },
         "mapped_items": mapped_items,
         "unmapped_items": unmapped_items,

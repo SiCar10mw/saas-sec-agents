@@ -72,6 +72,7 @@ scripts/
   upload-sample-data.sh
   oscal_import_sbs.py
   oscal_gap_map.py
+  oscal_smoke_test.sh
 config/
   role_model_policy.yaml
   role_tool_policy.yaml

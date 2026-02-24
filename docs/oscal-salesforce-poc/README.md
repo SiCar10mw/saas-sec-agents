@@ -60,6 +60,13 @@ python3 scripts/oscal_gap_map.py \
 ```
 
 Resulting artifacts include `sscf_mappings` and flattened `sscf_control_ids` per mapped item.
+Resulting mapped items also include `mapping_confidence` with aggregate `mapping_confidence_counts`.
+
+## One-Command Smoke Test
+```bash
+cd /Users/jerijuar/multiagent-azure
+./scripts/oscal_smoke_test.sh
+```
 
 ## Sandbox Hook (Phase 2)
 Implement read-only collectors that emit the existing baseline schema and include SBS IDs:
