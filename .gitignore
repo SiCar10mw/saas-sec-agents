@@ -11,3 +11,7 @@ crash.log
 terraform.tfvars
 *.tfvars
 !.example.tfvars
+
+# macOS Finder metadata
+.DS_Store
+**/.DS_Store
