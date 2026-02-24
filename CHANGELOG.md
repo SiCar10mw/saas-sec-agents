@@ -52,6 +52,12 @@ This project follows a simple changelog format and semantic versioning intent:
     - `config/saas_baseline_controls/salesforce.yaml`
     - `config/saas_baseline_controls/servicenow.yaml`
     - `config/saas_baseline_controls/workday.yaml`
+- Program operating artifacts added:
+  - `config/sscf_control_index.yaml`
+  - `schemas/baseline_assessment_schema.json`
+  - `docs/saas-baseline/raci.md`
+  - `docs/saas-baseline/exception-process.md`
+  - `docs/saas-baseline/quarterly-report-template.md`
 
 ## [0.1.0] - 2026-02-23
 

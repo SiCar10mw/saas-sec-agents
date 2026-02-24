@@ -15,9 +15,14 @@ Every control/action must include:
 
 ## Files
 - `docs/saas-baseline/sscf-mapping-method.md`
+- `docs/saas-baseline/raci.md`
+- `docs/saas-baseline/exception-process.md`
+- `docs/saas-baseline/quarterly-report-template.md`
 - `config/saas_baseline_controls/salesforce.yaml`
 - `config/saas_baseline_controls/servicenow.yaml`
 - `config/saas_baseline_controls/workday.yaml`
+- `config/sscf_control_index.yaml`
+- `schemas/baseline_assessment_schema.json`
 
 ## Minimum Mapping Fields
 - `sscf_domain`
@@ -30,4 +35,3 @@ Every control/action must include:
 2. Evaluate each control against expected state.
 3. Produce findings with SSCF references.
 4. Generate remediation backlog and exception workflow.
-

@@ -1,0 +1,55 @@
+version: 1
+framework: CSA_SSCF
+notes: >
+  Replace placeholder IDs with your organization-approved SSCF control IDs and names.
+  This index is the canonical reference used by platform baseline catalogs.
+
+controls:
+  - sscf_control_id: SSCF-IAM-01
+    domain: identity_access_management
+    title: Strong Authentication and Identity Assurance
+    description: Enforce identity proofing and MFA for privileged and user access.
+    owner_team: global_information_security
+
+  - sscf_control_id: SSCF-IAM-02
+    domain: identity_access_management
+    title: Privileged Access Governance
+    description: Limit and review privileged access on a defined cadence.
+    owner_team: global_information_security
+
+  - sscf_control_id: SSCF-LOG-01
+    domain: logging_monitoring
+    title: Security Telemetry Enablement
+    description: Enable, retain, and protect telemetry required for security operations.
+    owner_team: business_security_services
+
+  - sscf_control_id: SSCF-LOG-02
+    domain: logging_monitoring
+    title: Administrative Activity Auditing
+    description: Capture and review administrative and configuration changes.
+    owner_team: business_security_services
+
+  - sscf_control_id: SSCF-LOG-03
+    domain: logging_monitoring
+    title: Audit Trail Integrity and Retention
+    description: Preserve reliable audit evidence for incident response and compliance.
+    owner_team: business_security_services
+
+  - sscf_control_id: SSCF-TDR-02
+    domain: threat_detection_response
+    title: Policy-Driven Threat Prevention
+    description: Detect and block high-risk behaviors with predefined policies.
+    owner_team: security_operations
+
+  - sscf_control_id: SSCF-CKM-01
+    domain: cryptography_key_management
+    title: Credential and Key Lifecycle Management
+    description: Govern lifecycle of secrets, tokens, and keys including rotation.
+    owner_team: platform_security
+
+  - sscf_control_id: SSCF-DSP-02
+    domain: data_security_privacy
+    title: Sensitive Data Access and Export Controls
+    description: Prevent unauthorized access and exfiltration of sensitive data.
+    owner_team: data_security
+

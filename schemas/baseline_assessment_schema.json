@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/baseline_assessment_schema.json",
+  "title": "SaaS Baseline Assessment Result",
+  "type": "object",
+  "required": [
+    "assessment_id",
+    "platform",
+    "assessment_time_utc",
+    "assessor",
+    "findings"
+  ],
+  "properties": {
+    "assessment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "salesforce",
+        "servicenow",
+        "workday"
+      ]
+    },
+    "assessment_time_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "dev",
+        "test",
+        "prod"
+      ]
+    },
+    "assessor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_controls": { "type": "integer", "minimum": 0 },
+        "pass": { "type": "integer", "minimum": 0 },
+        "fail": { "type": "integer", "minimum": 0 },
+        "partial": { "type": "integer", "minimum": 0 },
+        "not_applicable": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "control_id",
+          "status",
+          "severity",
+          "evidence_source",
+          "sscf_mappings"
+        ],
+        "properties": {
+          "control_id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["pass", "fail", "partial", "not_applicable"]
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"]
+          },
+          "evidence_source": { "type": "string", "minLength": 1 },
+          "evidence_ref": { "type": "string" },
+          "observed_value": {},
+          "expected_value": {},
+          "remediation": { "type": "string" },
+          "owner": { "type": "string" },
+          "due_date": { "type": "string", "format": "date" },
+          "sscf_mappings": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "sscf_domain",
+                "sscf_control_id",
+                "mapping_strength",
+                "rationale"
+              ],
+              "properties": {
+                "sscf_domain": { "type": "string", "minLength": 1 },
+                "sscf_control_id": { "type": "string", "minLength": 1 },
+                "mapping_strength": {
+                  "type": "string",
+                  "enum": ["direct", "partial", "informative"]
+                },
+                "rationale": { "type": "string", "minLength": 1 }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
+
