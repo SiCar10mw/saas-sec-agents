@@ -11,7 +11,7 @@ controls:
       source: role_assignment_records
     sscf_mappings:
       - sscf_domain: identity_access_management
-        sscf_control_id: SSCF-IAM-02
+        sscf_control_id: SSCF-IAM-002
         mapping_strength: direct
         rationale: Limits privilege abuse and enforces access governance.
 
@@ -25,7 +25,7 @@ controls:
       source: sys_audit_and_syslog
     sscf_mappings:
       - sscf_domain: logging_monitoring
-        sscf_control_id: SSCF-LOG-02
+        sscf_control_id: SSCF-LOG-002
         mapping_strength: direct
         rationale: Supports traceability and incident investigation.
 
@@ -39,7 +39,7 @@ controls:
       source: integration_credentials_registry
     sscf_mappings:
       - sscf_domain: cryptography_key_management
-        sscf_control_id: SSCF-CKM-01
+        sscf_control_id: SSCF-CKM-001
         mapping_strength: partial
         rationale: Credential lifecycle and scope reduce API abuse exposure.
 

@@ -11,7 +11,7 @@ controls:
       source: authentication_policies
     sscf_mappings:
       - sscf_domain: identity_access_management
-        sscf_control_id: SSCF-IAM-01
+        sscf_control_id: SSCF-IAM-001
         mapping_strength: direct
         rationale: Prevents account takeover and enforces identity assurance.
 
@@ -25,7 +25,7 @@ controls:
       source: audit_event_stream
     sscf_mappings:
       - sscf_domain: logging_monitoring
-        sscf_control_id: SSCF-LOG-03
+        sscf_control_id: SSCF-LOG-003
         mapping_strength: direct
         rationale: Required for accountability and post-incident reconstruction.
 
@@ -39,7 +39,7 @@ controls:
       source: data_access_policies
     sscf_mappings:
       - sscf_domain: data_security_privacy
-        sscf_control_id: SSCF-DSP-02
+        sscf_control_id: SSCF-DSP-002
         mapping_strength: partial
         rationale: Limits data exfiltration pathways and improves confidentiality.
 

@@ -1,55 +1,91 @@
 version: 1
 framework: CSA_SSCF
+id_scheme: SSCF-<DOMAIN>-<###>
 notes: >
-  Replace placeholder IDs with your organization-approved SSCF control IDs and names.
-  This index is the canonical reference used by platform baseline catalogs.
+  Provisional internal control index for baseline operations.
+  Replace/tune IDs and names when your official SSCF control registry is finalized.
 
 controls:
-  - sscf_control_id: SSCF-IAM-01
+  - sscf_control_id: SSCF-IAM-001
     domain: identity_access_management
-    title: Strong Authentication and Identity Assurance
-    description: Enforce identity proofing and MFA for privileged and user access.
+    title: Multi-Factor Authentication Enforcement
+    description: Require MFA for privileged and workforce accounts.
     owner_team: global_information_security
 
-  - sscf_control_id: SSCF-IAM-02
+  - sscf_control_id: SSCF-IAM-002
     domain: identity_access_management
-    title: Privileged Access Governance
-    description: Limit and review privileged access on a defined cadence.
+    title: Privileged Access Governance and Review
+    description: Enforce approval, least privilege, and periodic recertification for privileged roles.
     owner_team: global_information_security
 
-  - sscf_control_id: SSCF-LOG-01
+  - sscf_control_id: SSCF-IAM-003
+    domain: identity_access_management
+    title: Federation and SSO Assurance
+    description: Enforce enterprise IdP federation and hardened SSO policy posture.
+    owner_team: global_information_security
+
+  - sscf_control_id: SSCF-LOG-001
     domain: logging_monitoring
     title: Security Telemetry Enablement
-    description: Enable, retain, and protect telemetry required for security operations.
+    description: Enable required audit/security logs for detection and forensics.
     owner_team: business_security_services
 
-  - sscf_control_id: SSCF-LOG-02
+  - sscf_control_id: SSCF-LOG-002
     domain: logging_monitoring
-    title: Administrative Activity Auditing
-    description: Capture and review administrative and configuration changes.
+    title: Administrative and Configuration Audit Logging
+    description: Capture and monitor administrative and configuration change events.
     owner_team: business_security_services
 
-  - sscf_control_id: SSCF-LOG-03
+  - sscf_control_id: SSCF-LOG-003
     domain: logging_monitoring
-    title: Audit Trail Integrity and Retention
-    description: Preserve reliable audit evidence for incident response and compliance.
+    title: Audit Retention and Integrity
+    description: Retain logs per policy and preserve integrity for investigations.
     owner_team: business_security_services
 
-  - sscf_control_id: SSCF-TDR-02
+  - sscf_control_id: SSCF-TDR-001
     domain: threat_detection_response
-    title: Policy-Driven Threat Prevention
-    description: Detect and block high-risk behaviors with predefined policies.
+    title: Real-Time Threat Policy Enforcement
+    description: Detect and block high-risk behavior through policy-driven controls.
     owner_team: security_operations
 
-  - sscf_control_id: SSCF-CKM-01
+  - sscf_control_id: SSCF-TDR-002
+    domain: threat_detection_response
+    title: Security Alert Triage and Escalation
+    description: Ensure high-risk alerts are triaged and escalated within SLA.
+    owner_team: security_operations
+
+  - sscf_control_id: SSCF-CKM-001
     domain: cryptography_key_management
-    title: Credential and Key Lifecycle Management
-    description: Govern lifecycle of secrets, tokens, and keys including rotation.
+    title: API Credential and Token Lifecycle
+    description: Govern issuance, scope, rotation, and revocation of credentials and tokens.
     owner_team: platform_security
 
-  - sscf_control_id: SSCF-DSP-02
+  - sscf_control_id: SSCF-DSP-001
     domain: data_security_privacy
-    title: Sensitive Data Access and Export Controls
-    description: Prevent unauthorized access and exfiltration of sensitive data.
+    title: Sensitive Data Access Control
+    description: Restrict and monitor access to sensitive business and personal data.
     owner_team: data_security
 
+  - sscf_control_id: SSCF-DSP-002
+    domain: data_security_privacy
+    title: Data Export and Exfiltration Controls
+    description: Prevent unauthorized data exports and exfiltration pathways.
+    owner_team: data_security
+
+  - sscf_control_id: SSCF-CON-001
+    domain: configuration_hardening
+    title: SaaS Security Baseline Enforcement
+    description: Apply and continuously assess approved secure configuration baselines.
+    owner_team: business_security_services
+
+  - sscf_control_id: SSCF-CON-002
+    domain: configuration_hardening
+    title: Drift Detection and Baseline Deviation Management
+    description: Detect unauthorized configuration drift and enforce remediation workflow.
+    owner_team: business_security_services
+
+  - sscf_control_id: SSCF-GOV-001
+    domain: governance_risk_compliance
+    title: Exception Governance and Risk Acceptance
+    description: Enforce time-bound exceptions with compensating controls and approvals.
+    owner_team: global_information_security
