@@ -26,7 +26,9 @@ Azure-first multi-agent DFIR/malware analysis architecture scaffold using:
 - `docs/sift-worker-runbook.md`: SIFT image and worker lifecycle runbook
 - `docs/sample-data-catalog.md`: approved evidence/sample data model and handling rules
 - `docs/agents/brutal-critic-agent.md`: hardline review agent spec for plan critiques
+- `docs/agents/tasks/brutal-critic-audit-task.md`: repeatable task for adversarial repository audits
 - `docs/templates/brutal-critic-review-template.md`: standard report format for critique results
+- `docs/reviews/`: timestamped brutal-critic audit outputs
 - `docs/saas-baseline/`: SSCF-aligned SaaS baseline method and guidance
 - `schemas/baseline_assessment_schema.json`: machine-readable assessment result schema
 - `CHANGELOG.md`: required ledger for all notable changes
