@@ -66,16 +66,18 @@ def _to_markdown(
         f"- not_applicable: `{summary['not_applicable']}`",
         "",
         "## Control Mapping Table",
-        "| Legacy Control ID | SBS Control ID | SBS Title | Status | Severity | Owner | Due Date |",
-        "|---|---|---|---|---|---|---|",
+        "| Legacy Control ID | SBS Control ID | SBS Title | SSCF Controls | Status | Severity | Owner | Due Date |",
+        "|---|---|---|---|---|---|---|---|",
     ]
 
     for item in mapped_items:
+        sscf_controls = ", ".join(item.get("sscf_control_ids", []))
         lines.append(
-            "| {legacy} | {sbs} | {title} | {status} | {severity} | {owner} | {due} |".format(
+            "| {legacy} | {sbs} | {title} | {sscf} | {status} | {severity} | {owner} | {due} |".format(
                 legacy=item.get("legacy_control_id", ""),
                 sbs=item.get("sbs_control_id", ""),
                 title=item.get("sbs_title", "").replace("|", "/"),
+                sscf=sscf_controls,
                 status=item.get("status", ""),
                 severity=item.get("severity", ""),
                 owner=item.get("owner", ""),
@@ -106,6 +108,11 @@ def main() -> int:
     parser.add_argument("--controls", required=True, help="Path to normalized SBS controls JSON.")
     parser.add_argument("--gap-analysis", required=True, help="Path to gap-analysis JSON.")
     parser.add_argument("--mapping", required=True, help="Path to control mapping YAML.")
+    parser.add_argument(
+        "--sscf-map",
+        default="config/oscal-salesforce/sbs_to_sscf_mapping.yaml",
+        help="Path to SBS-to-SSCF mapping YAML.",
+    )
     parser.add_argument("--out-md", required=True, help="Output markdown matrix path.")
     parser.add_argument("--out-json", required=True, help="Output JSON backlog path.")
     args = parser.parse_args()
@@ -114,6 +121,7 @@ def main() -> int:
     controls_path = (repo_root / args.controls).resolve()
     gap_path = (repo_root / args.gap_analysis).resolve()
     mapping_path = (repo_root / args.mapping).resolve()
+    sscf_map_path = (repo_root / args.sscf_map).resolve()
     out_md = (repo_root / args.out_md).resolve()
     out_json = (repo_root / args.out_json).resolve()
 
@@ -133,6 +141,10 @@ def main() -> int:
             legacy = str(row.get("legacy_control_id", "")).strip()
             if legacy:
                 map_by_legacy[legacy] = row
+
+    sscf_map_cfg = _load_yaml(sscf_map_path)
+    sscf_defaults_by_category = sscf_map_cfg.get("defaults_by_category", {})
+    sscf_overrides = sscf_map_cfg.get("control_overrides", {})
 
     mapped_items: List[Dict[str, Any]] = []
     unmapped_items: List[Dict[str, Any]] = []
@@ -169,13 +181,25 @@ def main() -> int:
                 "remediation": finding.get("remediation", ""),
                 "evidence_ref": finding.get("evidence_ref", ""),
                 "mapping_notes": map_row.get("notes", ""),
+                "sscf_mappings": sscf_overrides.get(sbs_control_id)
+                or sscf_defaults_by_category.get(sbs.get("category", ""))
+                or [],
             }
         )
+
+    for item in mapped_items:
+        sscf_mappings = item.get("sscf_mappings", [])
+        item["sscf_control_ids"] = [
+            mapping.get("sscf_control_id")
+            for mapping in sscf_mappings
+            if isinstance(mapping, dict) and mapping.get("sscf_control_id")
+        ]
 
     backlog_payload = {
         "assessment_id": assessment_id,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "catalog_version": controls_payload.get("catalog", {}).get("version"),
+        "framework": "CSA_SSCF",
         "summary": {
             "catalog_controls": len(controls_by_id),
             "findings_total": len(findings),

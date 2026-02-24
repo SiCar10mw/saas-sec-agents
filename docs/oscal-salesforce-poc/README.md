@@ -21,6 +21,7 @@ Stand up an OSCAL-aligned Salesforce baseline pipeline under the SaaS Risk Progr
 ## Directory Layout
 - `config/oscal-salesforce/sbs_source.yaml`: version-pinned SBS source configuration.
 - `config/oscal-salesforce/control_mapping.yaml`: map internal/gap IDs to SBS control IDs.
+- `config/oscal-salesforce/sbs_to_sscf_mapping.yaml`: map SBS controls/categories to CSA SSCF controls.
 - `scripts/oscal_import_sbs.py`: import SBS XML and normalize controls.
 - `scripts/oscal_gap_map.py`: apply mappings and generate backlog + scorecard artifacts.
 
@@ -53,9 +54,12 @@ python3 scripts/oscal_gap_map.py \
   --controls docs/oscal-salesforce-poc/generated/sbs_controls.json \
   --gap-analysis <PATH_TO_GAP_ANALYSIS_JSON> \
   --mapping config/oscal-salesforce/control_mapping.yaml \
+  --sscf-map config/oscal-salesforce/sbs_to_sscf_mapping.yaml \
   --out-md docs/oscal-salesforce-poc/generated/salesforce_oscal_gap_matrix.md \
   --out-json docs/oscal-salesforce-poc/generated/salesforce_oscal_backlog.json
 ```
+
+Resulting artifacts include `sscf_mappings` and flattened `sscf_control_ids` per mapped item.
 
 ## Sandbox Hook (Phase 2)
 Implement read-only collectors that emit the existing baseline schema and include SBS IDs:

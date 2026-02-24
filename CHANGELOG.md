@@ -68,6 +68,7 @@ This project follows a simple changelog format and semantic versioning intent:
   - `docs/oscal-salesforce-poc/WIKI_UPDATE_2026-02-24.md`
   - `config/oscal-salesforce/sbs_source.yaml`
   - `config/oscal-salesforce/control_mapping.yaml`
+  - `config/oscal-salesforce/sbs_to_sscf_mapping.yaml`
   - `scripts/oscal_import_sbs.py`
   - `scripts/oscal_gap_map.py`
 

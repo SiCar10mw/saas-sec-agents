@@ -10,11 +10,13 @@ Created an `OSCAL POC for Salesforce` track under the SaaS Risk Program to opera
 - `docs/oscal-salesforce-poc/README.md`
 - `config/oscal-salesforce/sbs_source.yaml`
 - `config/oscal-salesforce/control_mapping.yaml`
+- `config/oscal-salesforce/sbs_to_sscf_mapping.yaml`
 - `scripts/oscal_import_sbs.py`
 - `scripts/oscal_gap_map.py`
 
 ## Operating Intent
 - Use version-pinned SBS XML as upstream benchmark source.
+- Map SBS controls to CSA SSCF control IDs for governance traceability.
 - Preserve CDW ownership model (BSS + GIS) and exception governance.
 - Keep technical and operational baseline outputs in sync from one mapped control set.
 
@@ -23,4 +25,3 @@ Created an `OSCAL POC for Salesforce` track under the SaaS Risk Program to opera
 2. Run mapping against completed Salesforce gap analysis.
 3. Review unmapped controls and finalize control mapping.
 4. Implement sandbox collectors with evidence references per control.
-
