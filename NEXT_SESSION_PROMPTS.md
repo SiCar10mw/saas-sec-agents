@@ -1,57 +1,68 @@
-# Next Session Prompts (Codex Restart Pack)
+# Next Session Prompts (Current Restart Pack)
 
 ## Current State Snapshot
 - Repo: `/Users/jerijuar/multiagent-azure`
 - Branch: `main`
 - Remote: `git@github.com-443:SiCar10mw/multiagent-azure.git`
-- Git state: `main...origin/main [ahead 2]`
-- Unpushed commits:
-  - `b62f084` Add Salesforce Event Monitoring/TSP baseline deliverable docx
-  - `88c146d` Refine Salesforce baseline with SaaS pillars, CSA SSCF, and UK/CAN overlay
-- Network blocker: local DNS cannot resolve `github.com` / `ssh.github.com`
+- Git state: synced except one local workflow edit currently unstaged.
+- Primary workstream: `OSCAL POC for Salesforce` with SBS + CSA SSCF mapping.
 
-## Key Deliverable Files
-- `/Users/jerijuar/Downloads/CDW_Salesforce_EventMonitoring_TSP_Baseline_v1.0.docx`
-- `/Users/jerijuar/multiagent-azure/docs/saas-baseline/deliverables/CDW_Salesforce_EventMonitoring_TSP_Baseline_v1.0.docx`
-- `/Users/jerijuar/multiagent-azure/docs/saas-baseline/deliverables/CDW_Salesforce_EventMonitoring_TSP_Baseline_v1.0.md`
+## What Is Completed
+- Salesforce baseline v1.0 deliverable updated (MD + DOCX).
+- OSCAL scaffold implemented:
+  - `config/oscal-salesforce/*`
+  - `scripts/oscal_import_sbs.py`
+  - `scripts/oscal_gap_map.py`
+  - `scripts/oscal_smoke_test.sh`
+  - `docs/oscal-salesforce-poc/*`
+- Collector-style mock run generated and committed:
+  - `docs/oscal-salesforce-poc/generated/sbs_controls.json`
+  - `docs/oscal-salesforce-poc/generated/salesforce_oscal_backlog.json`
+  - `docs/oscal-salesforce-poc/generated/salesforce_oscal_gap_matrix.md`
+- Brutal-critic remediation backlog created:
+  - `docs/reviews/2026-02-24-brutal-critic-backlog.md`
 
-## Prompt 1: Resume + Recovery (Use First)
+## Open Item (Local Only Right Now)
+- `.github/workflows/security-checks.yml` is edited locally to enforce:
+  - tfsec `--minimum-severity HIGH`
+  - checkov `hard_fail_on: HIGH,CRITICAL`
+  - checkov `soft_fail_on: LOW,MEDIUM`
+- This change is not committed/pushed yet.
+
+## Prompt 1: Resume Exactly Where We Left Off
 ```text
 Resume from /Users/jerijuar/multiagent-azure/NEXT_SESSION_PROMPTS.md.
-First, diagnose and fix local DNS/network so github.com resolves, then push the 2 pending commits on main.
-After push succeeds, verify remote includes commits b62f084 and 88c146d.
-Do not change document names. Keep v1.0 naming.
+First, inspect git status and handle the pending local workflow change in .github/workflows/security-checks.yml:
+- either commit/push it, or revert it if we decide to keep report-only mode.
+Then confirm latest security-checks workflow behavior on GitHub Actions.
 ```
 
-## Prompt 2: Continue Baseline Improvement
+## Prompt 2: Run OSCAL Pipeline with Real Gap Data
 ```text
-Continue refining the Salesforce Event Monitoring + TSP baseline deliverable in docs/saas-baseline/deliverables.
-Keep SaaS Security Pillars and CSA SSCF as primary anchors.
-Keep UK and Canada regulatory overlay with references.
-Improve executive readability only (headings, concise tables, action-oriented wording), no scope creep.
+Use the OSCAL pipeline in /Users/jerijuar/multiagent-azure with my real Salesforce gap-analysis JSON.
+Run oscal_gap_map.py against real input and regenerate:
+- docs/oscal-salesforce-poc/generated/salesforce_oscal_backlog.json
+- docs/oscal-salesforce-poc/generated/salesforce_oscal_gap_matrix.md
+Keep SBS to CSA SSCF mapping enabled.
 ```
 
-## Prompt 3: Meeting-Ready Pack
+## Prompt 3: Start Sandbox Collector Implementation
 ```text
-Create a concise meeting pack from the current baseline:
-1) one-page executive summary,
-2) control matrix table (control ID, owner, drift KPI, SLA),
-3) implementation next-30-days plan.
-Save under docs/saas-baseline/meeting-pack and keep repo-private wording.
+Implement the first read-only Salesforce collector stub that emits schema-compatible findings.
+Start with Authentication/Access controls and output findings to baseline_assessment_schema.json shape.
+Save under scripts/ and docs/oscal-salesforce-poc/.
 ```
 
-## Prompt 4: If Push Still Fails
+## Prompt 4: Work Through Brutal-Critic Backlog
 ```text
-Push is failing because github hostname resolution is broken.
-Use a step-by-step DNS triage and provide exact terminal commands for my active network interface.
-Then re-test ssh to git@github.com-443 and push.
+Use docs/reviews/2026-02-24-brutal-critic-backlog.md as the source of truth.
+Start with BC-001, BC-002, BC-003 in order, with minimal safe increments and verification after each.
 ```
 
 ## First Commands To Run Next Session
 ```bash
 git -C /Users/jerijuar/multiagent-azure status -sb
-git -C /Users/jerijuar/multiagent-azure log --oneline -n 5
-git -C /Users/jerijuar/multiagent-azure remote -v
-ping -c 1 github.com || true
-ssh -T git@github.com-443 || true
+git -C /Users/jerijuar/multiagent-azure log --oneline -n 8
+git -C /Users/jerijuar/multiagent-azure diff -- .github/workflows/security-checks.yml
 ```
+
