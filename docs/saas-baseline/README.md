@@ -19,9 +19,11 @@ Every control/action must include:
 - `docs/saas-baseline/exception-process.md`
 - `docs/saas-baseline/quarterly-report-template.md`
 - `docs/saas-baseline/intake-template.md`
+- `docs/saas-baseline/salesforce-em-tsp-baseline-v1.md`
 - `config/saas_baseline_controls/salesforce.yaml`
 - `config/saas_baseline_controls/servicenow.yaml`
 - `config/saas_baseline_controls/workday.yaml`
+- `config/saas_baseline_profiles/salesforce_em_tsp_baseline_v1.yaml`
 - `config/sscf_control_index.yaml`
 - `schemas/baseline_assessment_schema.json`
 

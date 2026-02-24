@@ -7,7 +7,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
 
-import yaml
+try:
+    import yaml  # type: ignore
+except Exception:  # pragma: no cover
+    yaml = None
 
 
 def parse_event_types(value: str) -> List[str]:
@@ -175,7 +178,11 @@ def main() -> int:
     yaml_path = out_dir / f"salesforce-baseline-generated-{timestamp}.yaml"
     md_path = docs_out_dir / f"salesforce-baseline-generated-{timestamp}.md"
 
-    yaml_path.write_text(yaml.safe_dump(profile, sort_keys=False))
+    if yaml is not None:
+        yaml_path.write_text(yaml.safe_dump(profile, sort_keys=False))
+    else:
+        # JSON is valid YAML 1.2; fallback keeps script usable without PyYAML.
+        yaml_path.write_text(json.dumps(profile, indent=2))
     md_path.write_text(build_markdown(profile))
 
     print("Generated baseline artifacts:")
@@ -186,4 +193,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -16,6 +16,7 @@ Azure-first multi-agent DFIR/malware analysis architecture scaffold using:
 - `config/role_model_policy.yaml`: role-scoped model pool policy
 - `config/role_tool_policy.yaml`: role-scoped tool allowlist policy
 - `config/saas_baseline_controls/*.yaml`: SaaS baseline controls with CSA SSCF mapping
+- `config/saas_baseline_profiles/*.yaml`: platform baseline profiles for implementation
 - `config/sscf_control_index.yaml`: canonical SSCF control reference index
 - `docs/architecture.md`: reference architecture and execution model
 - `docs/cloud-mcp-architecture.md`: cloud-hosted MCP architecture (no local Docker dependency)
@@ -31,6 +32,7 @@ Azure-first multi-agent DFIR/malware analysis architecture scaffold using:
 - `docs/reviews/`: timestamped brutal-critic audit outputs
 - `docs/saas-baseline/`: SSCF-aligned SaaS baseline method and guidance
 - `docs/saas-baseline/intake-template.md`: requirements intake form for baseline design
+- `docs/saas-baseline/salesforce-em-tsp-baseline-v1.md`: first Salesforce baseline configuration
 - `schemas/baseline_assessment_schema.json`: machine-readable assessment result schema
 - `CHANGELOG.md`: required ledger for all notable changes
 
