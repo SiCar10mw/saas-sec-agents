@@ -58,6 +58,8 @@ This project follows a simple changelog format and semantic versioning intent:
   - `docs/saas-baseline/raci.md`
   - `docs/saas-baseline/exception-process.md`
   - `docs/saas-baseline/quarterly-report-template.md`
+- SaaS baseline intake template added:
+  - `docs/saas-baseline/intake-template.md`
 - Brutal-critic audit workflow additions:
   - `docs/agents/tasks/brutal-critic-audit-task.md`
   - `docs/reviews/2026-02-24-brutal-critic-audit.md`

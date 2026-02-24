@@ -30,6 +30,7 @@ Azure-first multi-agent DFIR/malware analysis architecture scaffold using:
 - `docs/templates/brutal-critic-review-template.md`: standard report format for critique results
 - `docs/reviews/`: timestamped brutal-critic audit outputs
 - `docs/saas-baseline/`: SSCF-aligned SaaS baseline method and guidance
+- `docs/saas-baseline/intake-template.md`: requirements intake form for baseline design
 - `schemas/baseline_assessment_schema.json`: machine-readable assessment result schema
 - `CHANGELOG.md`: required ledger for all notable changes
 

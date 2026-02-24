@@ -18,6 +18,7 @@ Every control/action must include:
 - `docs/saas-baseline/raci.md`
 - `docs/saas-baseline/exception-process.md`
 - `docs/saas-baseline/quarterly-report-template.md`
+- `docs/saas-baseline/intake-template.md`
 - `config/saas_baseline_controls/salesforce.yaml`
 - `config/saas_baseline_controls/servicenow.yaml`
 - `config/saas_baseline_controls/workday.yaml`
