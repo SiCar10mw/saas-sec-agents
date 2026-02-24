@@ -45,8 +45,8 @@ Establish a business-approved SaaS Security Configuration Baseline Program align
   - mass report/data export attempts
   - privileged admin behavior anomalies
 - Approved actions by severity:
-  - Critical: block + immediate SOC alert
-  - High: challenge/block + analyst review
+  - Critical: block + immediate Security Operations alert
+  - High: challenge/block + security team review
   - Medium: allow + alert + watchlist
 
 ### 2) ServiceNow (Priority 2)
@@ -92,4 +92,3 @@ Establish a business-approved SaaS Security Configuration Baseline Program align
 
 ## Ask for Approval
 Approve this v1 baseline direction so implementation can start with Salesforce Event Monitoring + Transaction Security policy controls.
-

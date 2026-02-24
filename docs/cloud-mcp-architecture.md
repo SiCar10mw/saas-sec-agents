@@ -12,7 +12,7 @@ This project is cloud-first: all MCP tool capabilities are hosted in Azure so op
 - No workstation dependency on Docker Desktop.
 - Centralized governance and audit.
 - Consistent runtime across environments.
-- Easier SOC operational handoff.
+- Easier security operations handoff.
 
 ## Security Controls
 - Entra auth and APIM policy enforcement.

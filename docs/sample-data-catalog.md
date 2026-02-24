@@ -27,7 +27,7 @@ For malware binaries:
 ## Data Handling Rules
 1. Every upload must include SHA256 manifest in `manifests`.
 2. No public blob/container access.
-3. Access is RBAC-scoped to SOC roles only.
+3. Access is RBAC-scoped to authorized security operations roles only.
 4. Evidence is immutable once attached to a case (policy phase-in).
 5. Malware samples must only be processed in isolated sandbox workers.
 
@@ -50,7 +50,7 @@ scripts/upload-sample-data.sh \
 - Mount/download sample blobs to ephemeral SIFT workers at job start.
 - Keep workers single-case and destroy after analysis.
 - Upload only derived artifacts and required evidence outputs.
-- Maintain chain-of-custody metadata (case ID, source hash, analyst ID).
+- Maintain chain-of-custody metadata (case ID, source hash, operator ID).
 
 ## Release Validation (RV)
 - Upload one file per container class and verify manifest integrity.

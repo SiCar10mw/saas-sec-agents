@@ -30,7 +30,7 @@ Use this before any workload deployment. If your business already has a tenant, 
 ## 3) Logging + Security Baseline
 1. Create central Log Analytics workspace (or dedicated per environment with forwarding strategy).
 2. Enable Microsoft Defender for Cloud plans required by policy.
-3. Onboard subscriptions to Microsoft Sentinel (or your SOC data plane standard).
+3. Onboard subscriptions to Microsoft Sentinel (or your security operations data plane standard).
 4. Enable activity/resource diagnostics on all critical services.
 5. Configure retention and immutable evidence strategy for DFIR artifacts.
 
@@ -71,4 +71,3 @@ Apply a baseline initiative with, at minimum:
 - [ ] Logging/security onboarding completed.
 - [ ] GitHub OIDC pipeline authenticated.
 - [ ] Terraform plan runs in `workload-dev`.
-

@@ -60,5 +60,4 @@ Use this template to capture complete requirements before building or updating S
 ## 10) Deliverable Format
 - Preferred output format (docx/markdown/yaml/json):
 - Need executive summary + technical baseline + implementation backlog (yes/no):
-- Need SOC/admin runbook (yes/no):
-
+- Need security operations/admin runbook (yes/no):

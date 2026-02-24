@@ -3,14 +3,14 @@
 ## Teams
 - `GIS`: Global Information Security (corporate policy/standards owner)
 - `BSS`: Business Security Services (program operations owner)
-- `SOC`: Security Operations Center
+- `SECOPS`: Security Operations / Cyber Defense team
 - `APP`: SaaS Application Owners (Salesforce/ServiceNow/Workday)
 - `PLAT`: Platform Engineering / IAM / Cloud Platform
 - `AUDIT`: Internal Audit / Compliance
 
 ## Responsibility Matrix
 
-| Activity | GIS | BSS | SOC | APP | PLAT | AUDIT |
+| Activity | GIS | BSS | SECOPS | APP | PLAT | AUDIT |
 |---|---|---|---|---|---|---|
 | Define policy and security standards | A | C | I | C | C | C |
 | Maintain SSCF control mapping index | A | R | C | C | C | I |
@@ -27,4 +27,3 @@
 - Baseline requirement changes: `GIS` final approval.
 - Remediation execution timing: `BSS` + `APP` joint planning.
 - Exception acceptance: `GIS` decision with documented risk owner sign-off.
-
