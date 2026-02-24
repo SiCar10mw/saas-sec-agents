@@ -36,6 +36,7 @@ Stand up an OSCAL-aligned Salesforce baseline pipeline under the SaaS Risk Progr
     - optional `owner`, `remediation`, `due_date`, `evidence_ref`
 - Sample input for dry runs:
   - `docs/oscal-salesforce-poc/examples/gap-analysis-sample.json`
+  - `docs/oscal-salesforce-poc/examples/gap-analysis-salesforce-collector-mock.json` (collector-style full control set)
 
 ## Outputs
 - `docs/oscal-salesforce-poc/generated/sbs_controls.json`

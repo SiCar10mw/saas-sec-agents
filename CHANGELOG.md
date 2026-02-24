@@ -77,6 +77,10 @@ This project follows a simple changelog format and semantic versioning intent:
   - `scripts/oscal_gap_map.py` adds `mapping_confidence` in mapped artifacts and summary counts.
   - `scripts/oscal_smoke_test.sh` adds one-command import/map smoke test.
   - `.github/workflows/security-checks.yml` adds `tfsec` and `checkov` scans for Terraform.
+- OSCAL collector-mock test data and direct SBS control mapping:
+  - `scripts/oscal_gap_map.py` supports direct `SBS-*` control IDs from collector outputs.
+  - `docs/oscal-salesforce-poc/examples/gap-analysis-salesforce-collector-mock.json` adds full 45-control mock run data.
+  - Smoke test now uses collector-style mock dataset by default.
 
 ## [0.1.0] - 2026-02-23
 

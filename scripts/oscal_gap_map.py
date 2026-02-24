@@ -153,6 +153,35 @@ def main() -> int:
 
     for finding in findings:
         legacy_control_id = str(finding.get("control_id", "")).strip()
+        if legacy_control_id.startswith("SBS-"):
+            sbs_control_id = legacy_control_id
+            sbs = controls_by_id.get(sbs_control_id)
+            if not sbs:
+                invalid_mapping_entries.append(
+                    f"{legacy_control_id} -> {sbs_control_id} (SBS control not found in imported catalog)"
+                )
+                continue
+
+            mapped_items.append(
+                {
+                    "legacy_control_id": legacy_control_id,
+                    "sbs_control_id": sbs_control_id,
+                    "sbs_title": sbs.get("title", ""),
+                    "status": finding.get("status", ""),
+                    "severity": finding.get("severity", ""),
+                    "owner": finding.get("owner", ""),
+                    "due_date": finding.get("due_date", ""),
+                    "remediation": finding.get("remediation", ""),
+                    "evidence_ref": finding.get("evidence_ref", ""),
+                    "mapping_notes": "Direct collector mapping (SBS control ID emitted by collector).",
+                    "mapping_confidence": "high",
+                    "sscf_mappings": sscf_overrides.get(sbs_control_id)
+                    or sscf_defaults_by_category.get(sbs.get("category", ""))
+                    or [],
+                }
+            )
+            continue
+
         map_row = map_by_legacy.get(legacy_control_id)
         if not map_row:
             unmapped_items.append(

@@ -26,7 +26,7 @@ python3 "$ROOT/scripts/oscal_import_sbs.py" \
 echo "[2/2] Map sample gap analysis to SBS + CSA SSCF"
 python3 "$ROOT/scripts/oscal_gap_map.py" \
   --controls docs/oscal-salesforce-poc/generated/sbs_controls.json \
-  --gap-analysis docs/oscal-salesforce-poc/examples/gap-analysis-sample.json \
+  --gap-analysis docs/oscal-salesforce-poc/examples/gap-analysis-salesforce-collector-mock.json \
   --mapping config/oscal-salesforce/control_mapping.yaml \
   --sscf-map config/oscal-salesforce/sbs_to_sscf_mapping.yaml \
   --out-md docs/oscal-salesforce-poc/generated/salesforce_oscal_gap_matrix.md \
@@ -49,4 +49,3 @@ print("mapping_confidence_counts:", data.get("summary", {}).get("mapping_confide
 PY
 
 echo "Smoke test complete."
-
