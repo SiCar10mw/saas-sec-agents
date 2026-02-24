@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List
+
+
+def _load_json(path: Path) -> Dict[str, Any]:
+    data = json.loads(path.read_text())
+    if not isinstance(data, dict):
+        raise ValueError(f"Expected JSON object at {path}")
+    return data
+
+
+def _load_yaml(path: Path) -> Dict[str, Any]:
+    try:
+        import yaml  # type: ignore
+    except ModuleNotFoundError as exc:
+        raise RuntimeError("PyYAML is required. Install with: pip install PyYAML") from exc
+    data = yaml.safe_load(path.read_text())
+    if not isinstance(data, dict):
+        raise ValueError(f"Expected YAML object at {path}")
+    return data
+
+
+def _findings(gap: Dict[str, Any]) -> List[Dict[str, Any]]:
+    findings = gap.get("findings", [])
+    if not isinstance(findings, list):
+        raise ValueError("gap-analysis JSON must include findings[]")
+    return [f for f in findings if isinstance(f, dict)]
+
+
+def _status_summary(items: List[Dict[str, Any]]) -> Dict[str, int]:
+    summary = {"pass": 0, "fail": 0, "partial": 0, "not_applicable": 0}
+    for item in items:
+        status = str(item.get("status", "")).strip()
+        if status in summary:
+            summary[status] += 1
+    return summary
+
+
+def _to_markdown(
+    assessment_id: str,
+    control_count: int,
+    mapped_items: List[Dict[str, Any]],
+    unmapped_items: List[Dict[str, Any]],
+    invalid_mapping_entries: List[str],
+) -> str:
+    summary = _status_summary(mapped_items)
+    lines = [
+        "# Salesforce OSCAL Gap Matrix (POC)",
+        "",
+        f"- Assessment ID: `{assessment_id}`",
+        f"- Generated UTC: `{datetime.now(timezone.utc).isoformat()}`",
+        f"- SBS controls in catalog: `{control_count}`",
+        f"- Mapped findings: `{len(mapped_items)}`",
+        f"- Unmapped findings: `{len(unmapped_items)}`",
+        "",
+        "## Status Summary (Mapped Findings)",
+        f"- pass: `{summary['pass']}`",
+        f"- fail: `{summary['fail']}`",
+        f"- partial: `{summary['partial']}`",
+        f"- not_applicable: `{summary['not_applicable']}`",
+        "",
+        "## Control Mapping Table",
+        "| Legacy Control ID | SBS Control ID | SBS Title | Status | Severity | Owner | Due Date |",
+        "|---|---|---|---|---|---|---|",
+    ]
+
+    for item in mapped_items:
+        lines.append(
+            "| {legacy} | {sbs} | {title} | {status} | {severity} | {owner} | {due} |".format(
+                legacy=item.get("legacy_control_id", ""),
+                sbs=item.get("sbs_control_id", ""),
+                title=item.get("sbs_title", "").replace("|", "/"),
+                status=item.get("status", ""),
+                severity=item.get("severity", ""),
+                owner=item.get("owner", ""),
+                due=item.get("due_date", ""),
+            )
+        )
+
+    lines += ["", "## Unmapped Findings"]
+    if not unmapped_items:
+        lines.append("- None")
+    else:
+        for item in unmapped_items:
+            lines.append(f"- `{item.get('legacy_control_id', '')}` ({item.get('status', '')}, {item.get('severity', '')})")
+
+    lines += ["", "## Invalid Mapping Entries"]
+    if not invalid_mapping_entries:
+        lines.append("- None")
+    else:
+        for entry in invalid_mapping_entries:
+            lines.append(f"- {entry}")
+
+    lines.append("")
+    return "\n".join(lines)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Map gap-analysis findings to SBS controls.")
+    parser.add_argument("--controls", required=True, help="Path to normalized SBS controls JSON.")
+    parser.add_argument("--gap-analysis", required=True, help="Path to gap-analysis JSON.")
+    parser.add_argument("--mapping", required=True, help="Path to control mapping YAML.")
+    parser.add_argument("--out-md", required=True, help="Output markdown matrix path.")
+    parser.add_argument("--out-json", required=True, help="Output JSON backlog path.")
+    args = parser.parse_args()
+
+    repo_root = Path(__file__).resolve().parents[1]
+    controls_path = (repo_root / args.controls).resolve()
+    gap_path = (repo_root / args.gap_analysis).resolve()
+    mapping_path = (repo_root / args.mapping).resolve()
+    out_md = (repo_root / args.out_md).resolve()
+    out_json = (repo_root / args.out_json).resolve()
+
+    controls_payload = _load_json(controls_path)
+    controls = controls_payload.get("controls", [])
+    controls_by_id = {c.get("control_id"): c for c in controls if isinstance(c, dict)}
+
+    gap = _load_json(gap_path)
+    findings = _findings(gap)
+    assessment_id = str(gap.get("assessment_id", "unknown-assessment"))
+
+    mapping_cfg = _load_yaml(mapping_path)
+    mappings = mapping_cfg.get("mappings", [])
+    map_by_legacy: Dict[str, Dict[str, Any]] = {}
+    for row in mappings:
+        if isinstance(row, dict):
+            legacy = str(row.get("legacy_control_id", "")).strip()
+            if legacy:
+                map_by_legacy[legacy] = row
+
+    mapped_items: List[Dict[str, Any]] = []
+    unmapped_items: List[Dict[str, Any]] = []
+    invalid_mapping_entries: List[str] = []
+
+    for finding in findings:
+        legacy_control_id = str(finding.get("control_id", "")).strip()
+        map_row = map_by_legacy.get(legacy_control_id)
+        if not map_row:
+            unmapped_items.append(
+                {
+                    "legacy_control_id": legacy_control_id,
+                    "status": finding.get("status", ""),
+                    "severity": finding.get("severity", ""),
+                }
+            )
+            continue
+
+        sbs_control_id = str(map_row.get("sbs_control_id", "")).strip()
+        sbs = controls_by_id.get(sbs_control_id)
+        if not sbs:
+            invalid_mapping_entries.append(f"{legacy_control_id} -> {sbs_control_id} (not found in imported catalog)")
+            continue
+
+        mapped_items.append(
+            {
+                "legacy_control_id": legacy_control_id,
+                "sbs_control_id": sbs_control_id,
+                "sbs_title": sbs.get("title", ""),
+                "status": finding.get("status", ""),
+                "severity": finding.get("severity", ""),
+                "owner": finding.get("owner", ""),
+                "due_date": finding.get("due_date", ""),
+                "remediation": finding.get("remediation", ""),
+                "evidence_ref": finding.get("evidence_ref", ""),
+                "mapping_notes": map_row.get("notes", ""),
+            }
+        )
+
+    backlog_payload = {
+        "assessment_id": assessment_id,
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "catalog_version": controls_payload.get("catalog", {}).get("version"),
+        "summary": {
+            "catalog_controls": len(controls_by_id),
+            "findings_total": len(findings),
+            "mapped_findings": len(mapped_items),
+            "unmapped_findings": len(unmapped_items),
+            "invalid_mapping_entries": len(invalid_mapping_entries),
+            "status_counts": _status_summary(mapped_items),
+        },
+        "mapped_items": mapped_items,
+        "unmapped_items": unmapped_items,
+        "invalid_mapping_entries": invalid_mapping_entries,
+    }
+
+    out_json.parent.mkdir(parents=True, exist_ok=True)
+    out_md.parent.mkdir(parents=True, exist_ok=True)
+    out_json.write_text(json.dumps(backlog_payload, indent=2))
+    out_md.write_text(
+        _to_markdown(
+            assessment_id=assessment_id,
+            control_count=len(controls_by_id),
+            mapped_items=mapped_items,
+            unmapped_items=unmapped_items,
+            invalid_mapping_entries=invalid_mapping_entries,
+        )
+    )
+
+    print(f"Mapped findings written to {out_json}")
+    print(f"Gap matrix written to {out_md}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

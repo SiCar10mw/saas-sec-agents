@@ -33,6 +33,7 @@ Azure-first multi-agent DFIR/malware analysis architecture scaffold using:
 - `docs/saas-baseline/`: SSCF-aligned SaaS baseline method and guidance
 - `docs/saas-baseline/intake-template.md`: requirements intake form for baseline design
 - `docs/saas-baseline/salesforce-em-tsp-baseline-v1.md`: first Salesforce baseline configuration
+- `docs/oscal-salesforce-poc/`: OSCAL POC for Salesforce (SBS ingestion + gap mapping workflow)
 - `schemas/baseline_assessment_schema.json`: machine-readable assessment result schema
 - `CHANGELOG.md`: required ledger for all notable changes
 
@@ -69,10 +70,13 @@ scripts/
   sift-install.sh
   sift-hardening.sh
   upload-sample-data.sh
+  oscal_import_sbs.py
+  oscal_gap_map.py
 config/
   role_model_policy.yaml
   role_tool_policy.yaml
   saas_baseline_controls/
+  oscal-salesforce/
 infra/terraform/
   versions.tf
   providers.tf
@@ -90,6 +94,7 @@ docs/
   sample-data-catalog.md
   cloud-mcp-architecture.md
   saas-baseline/
+  oscal-salesforce-poc/
 ```
 
 ## Next Build Steps
