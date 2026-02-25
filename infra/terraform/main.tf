@@ -91,7 +91,11 @@ resource "azurerm_key_vault" "main" {
   soft_delete_retention_days    = 7
   purge_protection_enabled      = false
   public_network_access_enabled = true
-  tags                          = local.tags
+  network_acls {
+    default_action = "Deny"
+    bypass         = "AzureServices"
+  }
+  tags = local.tags
 }
 
 data "azurerm_client_config" "current" {}
