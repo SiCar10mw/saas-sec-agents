@@ -1,7 +1,7 @@
 # Next Session Prompts — saas-sec-agents
 
 ## Current State
-- Repo: `https://github.com/SiCar10mw/saas-sec-agents`
+- Repo: `https://github.com/dfirs1car1o/saas-sec-agents`
 - Branch: `main`
 - Local path: `/Users/jerijuar/multiagent-azure`
 
@@ -17,7 +17,7 @@
 ## Prompt 1: Phase 2 — OSCAL Assessment Pipeline
 ```text
 Resume from /Users/jerijuar/multiagent-azure/NEXT_SESSION.md.
-Phase 1 is complete. Repo is SiCar10mw/saas-sec-agents.
+Phase 1 is complete. Repo is dfirs1car1o/saas-sec-agents.
 Build Phase 2: skills/oscal_assess/oscal_assess.py and skills/sscf_benchmark/sscf_benchmark.py
 wrapping the existing scripts/oscal_gap_map.py. End-to-end: sfdc-connect → oscal-assess → backlog.json.
 ```
@@ -33,7 +33,7 @@ Then refresh the business-unit deliverable DOCX with run-specific metrics and to
 
 ## Prompt 3: GitHub Org Setup
 ```text
-My GitHub org is SiCar10mw. I need to:
+My GitHub org is dfirs1car1o. I need to:
 1. Enable 2FA requirement for all members (requires admin:org scope — do manually in GitHub org settings)
 2. Set Actions permissions to read-only
 3. Add my colleague's GitHub username to CODEOWNERS and flip enforce_admins=true on branch protection

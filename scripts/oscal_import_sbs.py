@@ -4,9 +4,10 @@ from __future__ import annotations
 import argparse
 import json
 import urllib.request
-import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any, Dict, List
+
+import defusedxml.ElementTree as ET  # safer XML parsing (prevents XXE/entity expansion)
 
 
 def _load_yaml(path: Path) -> Dict[str, Any]:
@@ -30,7 +31,11 @@ def _read_xml_bytes(source_cfg: Dict[str, Any], base_dir: Path) -> bytes:
     if not isinstance(xml_url, str) or not xml_url.strip():
         raise ValueError("Missing required xml_url in source config.")
 
-    with urllib.request.urlopen(xml_url, timeout=60) as response:
+    # Restrict to HTTPS only — prevents file:// and custom scheme abuse (B310)
+    if not xml_url.startswith("https://"):
+        raise ValueError(f"xml_url must use https:// scheme, got: {xml_url!r}")
+
+    with urllib.request.urlopen(xml_url, timeout=60) as response:  # noqa: S310
         return response.read()
 
 

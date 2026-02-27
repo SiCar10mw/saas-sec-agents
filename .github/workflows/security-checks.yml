@@ -21,8 +21,10 @@ jobs:
 
       - run: pip install bandit[toml]
 
-      - name: Run Bandit (HIGH severity = fail)
-        run: bandit -r skills/ scripts/ -ll -ii
+      - name: Run Bandit (HIGH severity = hard fail)
+        # -lll = HIGH+ severity, -ii = MEDIUM+ confidence
+        # MEDIUM findings surface in pr-inline-review.yml as annotations only
+        run: bandit -r skills/ scripts/ -lll -ii
 
   pip-audit:
     name: pip-audit (dependency CVEs)

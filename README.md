@@ -48,7 +48,7 @@ All tools in this system are CLI-based. Call with `--help` if uncertain.
 **Prerequisites:** Python 3.11+, `uv`
 
 ```bash
-git clone git@github.com:SiCar10mw/saas-sec-agents.git
+git clone git@github.com:dfirs1car1o/saas-sec-agents.git
 cd saas-sec-agents
 ./setup.sh
 ```

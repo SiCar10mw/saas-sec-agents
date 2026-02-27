@@ -39,17 +39,28 @@ jobs:
 
       - run: pip install bandit[toml]
 
-      - name: Bandit annotations (HIGH+ = fail)
-        run: bandit -r skills/ scripts/ -ll -ii -f json | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-for r in data.get('results', []):
-    sev = r['issue_severity']
-    conf = r['issue_confidence']
-    fname = r['filename']
-    line = r['line_number']
-    msg = r['issue_text']
-    test = r['test_id']
-    level = 'error' if sev == 'HIGH' else 'warning'
-    print(f'::{level} file={fname},line={line}::{test}: [{sev}/{conf}] {msg}')
-" || true
+      - name: Bandit JSON output
+        # MEDIUM+ severity, MEDIUM+ confidence — full annotation coverage
+        # || true so the step doesn't fail (annotations are informational here)
+        run: bandit -r skills/ scripts/ -ll -ii -f json -o /tmp/bandit.json || true
+
+      - name: Emit GitHub annotations
+        run: |
+          python3 - <<'PYEOF'
+          import json, sys
+          try:
+              with open("/tmp/bandit.json") as f:
+                  data = json.load(f)
+          except (FileNotFoundError, json.JSONDecodeError):
+              print("No bandit output found")
+              sys.exit(0)
+          for r in data.get("results", []):
+              sev = r["issue_severity"]
+              conf = r["issue_confidence"]
+              fname = r["filename"]
+              line = r["line_number"]
+              msg = r["issue_text"]
+              test = r["test_id"]
+              level = "error" if sev == "HIGH" else "warning"
+              print(f"::{level} file={fname},line={line}::{test}: [{sev}/{conf}] {msg}")
+          PYEOF

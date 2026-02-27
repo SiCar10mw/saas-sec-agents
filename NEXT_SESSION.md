@@ -11,7 +11,7 @@ sfdc-connect CLI built with simple-salesforce + Tooling API. GitHub org partiall
 
 ### Completed This Session
 
-- [x] New repo `saas-sec-agents` created at https://github.com/SiCar10mw/saas-sec-agents
+- [x] New repo `saas-sec-agents` created at https://github.com/dfirs1car1o/saas-sec-agents
 - [x] Origin remote updated from `multiagent-azure` → `saas-sec-agents`
 - [x] Full history pushed to new repo (includes legacy Azure commits as context)
 - [x] Branch protection on main: require 1 PR review, no force push, stale review dismissal
@@ -28,7 +28,7 @@ sfdc-connect CLI built with simple-salesforce + Tooling API. GitHub org partiall
 
 ---
 
-## GitHub Org Audit Results (SiCar10mw)
+## GitHub Org Audit Results (dfirs1car1o)
 
 | Check | Status | Notes |
 |---|---|---|
