@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 import click
@@ -56,7 +56,7 @@ def _result_envelope(org: str, env: str, scope: str, data: Any) -> dict:
     return {
         "org": org,
         "env": env,
-        "collected_at_utc": datetime.now(timezone.utc).isoformat(),
+        "collected_at_utc": datetime.now(UTC).isoformat(),
         "scope": scope,
         "raw": data,
     }
@@ -84,7 +84,8 @@ def collect_auth(sf: Any) -> dict:
     try:
         tooling_result = sf.restful(
             "tooling/query",
-            params={"q": "SELECT SessionTimeout, RequireHttps, ForceLogoutOnSessionTimeout, LockSessionsToDomain FROM SecuritySettings LIMIT 1"},
+            params={"q": "SELECT SessionTimeout, RequireHttps, ForceLogoutOnSessionTimeout,"
+                         " LockSessionsToDomain FROM SecuritySettings LIMIT 1"},
         )
         data["session_settings"] = tooling_result
     except Exception as exc:
@@ -94,7 +95,8 @@ def collect_auth(sf: Any) -> dict:
     try:
         mfa_result = sf.restful(
             "tooling/query",
-            params={"q": "SELECT MultiFactorAuthenticationForUserUI, MultiFactorAuthenticationForUserUIBlock FROM OrganizationSettings LIMIT 1"},
+            params={"q": "SELECT MultiFactorAuthenticationForUserUI, MultiFactorAuthenticationForUserUIBlock"
+                         " FROM OrganizationSettings LIMIT 1"},
         )
         data["mfa_org_settings"] = mfa_result
     except Exception as exc:
