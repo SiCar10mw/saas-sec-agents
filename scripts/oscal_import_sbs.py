@@ -83,9 +83,7 @@ def _parse_controls(xml_bytes: bytes) -> dict[str, Any]:
                         if remediation_scope_node is not None
                         else "",
                     },
-                    "task": {
-                        "title_template": _text(task_node, "title_template", ns) if task_node is not None else ""
-                    },
+                    "task": {"title_template": _text(task_node, "title_template", ns) if task_node is not None else ""},
                 }
             )
 
