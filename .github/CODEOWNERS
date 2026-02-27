@@ -1,12 +1,20 @@
-# Default owner for all changes (replace with your org team when available).
+# Default owner for all changes.
 * @jerijuar
 
-# Terraform changes require infra ownership review.
-infra/terraform/** @jerijuar
+# Agent definitions and mission scope — require security review.
+agents/** @jerijuar
+mission.md @jerijuar
 
-# Application code changes require app ownership review.
-app/** @jerijuar
+# Skills (CLIs) — require both owners to review.
+skills/** @jerijuar
+# TODO: add colleague GitHub username here when known, e.g.:
+# skills/** @jerijuar @colleague-username
+
+# Control framework configs — require security and compliance review.
+config/** @jerijuar
+
+# Generated evidence — owned by security team.
+docs/oscal-salesforce-poc/generated/** @jerijuar
 
 # Workflow/policy changes require platform ownership review.
 .github/** @jerijuar
-
