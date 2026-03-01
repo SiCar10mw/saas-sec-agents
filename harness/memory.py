@@ -57,7 +57,19 @@ def build_client() -> Any:
             },
         }
 
-    return Memory.from_config({"vector_store": vector_config})
+    config: dict[str, Any] = {"vector_store": vector_config}
+
+    # If no OpenAI key is available, tell Mem0 to use a lightweight local embedder
+    # (sentence-transformers via huggingface) instead of the OpenAI default.
+    # If that's also unavailable, build_client() will raise and the caller's
+    # try/except will degrade memory gracefully.
+    if not os.getenv("OPENAI_API_KEY"):
+        config["embedder"] = {
+            "provider": "huggingface",
+            "config": {"model": "multi-qa-MiniLM-L6-cos-v1"},
+        }
+
+    return Memory.from_config(config)
 
 
 def load_memories(client: Any, org_alias: str) -> str:

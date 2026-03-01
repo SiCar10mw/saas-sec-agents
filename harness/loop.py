@@ -21,12 +21,17 @@ from pathlib import Path
 from typing import Any
 
 import click
+from dotenv import load_dotenv
 
 from harness.agents import ORCHESTRATOR
 from harness.memory import build_client, load_memories, save_assessment
 from harness.tools import ALL_TOOLS, dispatch
 
 _REPO = Path(__file__).resolve().parents[1]
+
+# Load .env at import time so ANTHROPIC_API_KEY and SF_* vars are in os.environ
+# before Click reads envvar= options or os.getenv() is called anywhere.
+load_dotenv(_REPO / ".env")
 _MAX_TURNS = 20  # hard stop to prevent runaway loops
 
 # ---------------------------------------------------------------------------
