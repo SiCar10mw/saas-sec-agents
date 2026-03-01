@@ -613,7 +613,7 @@ def cli() -> None:
     "--audience",
     required=True,
     type=click.Choice(["app-owner", "gis"]),
-    help="Report audience: 'app-owner' (plain-language) or 'gis' (technical governance).",
+    help="'app-owner' = plain-language executive report. 'gis' = CorpIS technical governance review.",
 )
 @click.option(
     "--out",
@@ -679,7 +679,7 @@ def generate(
     auto_title = (
         f"Salesforce Security Assessment — {resolved_org} — {date_str}"
         if audience == "app-owner"
-        else f"Salesforce OSCAL/SSCF Governance Review — {resolved_org} — {date_str}"
+        else f"Salesforce OSCAL/SSCF CorpIS Governance Review — {resolved_org} — {date_str}"
     )
     resolved_title = title or auto_title
 

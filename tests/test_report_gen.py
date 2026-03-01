@@ -1,7 +1,11 @@
 """Smoke tests for report-gen skill.
 
-Exercises app-owner MD, GIS MD (with sscf_report), and DOCX output
-using the real salesforce_oscal_backlog_latest.json already in the repo.
+Exercises three output variants:
+- app-owner audience Markdown (plain-language executive report)
+- CorpIS governance audience Markdown with SSCF domain heatmap
+- app-owner DOCX (validated as a real Office Open XML ZIP)
+
+Uses the real salesforce_oscal_backlog_latest.json already in the repo.
 All tests are skipped if that file is not present (matches pipeline smoke pattern).
 """
 
@@ -85,7 +89,7 @@ def test_app_owner_md(tmp_path: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Test 2 — GIS Markdown (with sscf_report)
+# Test 2 — CorpIS governance Markdown (with sscf_report)
 # ---------------------------------------------------------------------------
 
 
