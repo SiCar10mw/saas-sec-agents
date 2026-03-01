@@ -1,3 +1,11 @@
+## Reference Architecture
+
+![Reference Architecture](../docs/architecture.png)
+
+> Auto-regenerated on every push to main. If this PR changes the architecture, the diagram updates automatically after merge.
+
+---
+
 ## Summary
 - What changed:
 - Why:
