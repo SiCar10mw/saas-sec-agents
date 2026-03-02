@@ -320,14 +320,21 @@ def run(env: str, org: str, dry_run: bool, approve_critical: bool, task: str | N
 
     if task is None:
         dry_note = " Use dry_run=true for all tool calls (no real Salesforce connection)." if dry_run else ""
+        dry_gate_note = (
+            " This is a dry run — proceed through all pipeline stages including report generation "
+            "without waiting for human review of findings."
+        ) if dry_run else ""
         task = (
             f"Run a full OSCAL/SSCF security assessment for Salesforce org '{org}' "
-            f"in environment '{env}'.{dry_note}\n\n"
+            f"in environment '{env}'.{dry_note}{dry_gate_note}\n\n"
+            f"IMPORTANT: Pass org='{org}' to every tool call so all outputs land in the same directory.\n\n"
             "Pipeline:\n"
-            "1. Call sfdc_connect_collect (scope='all') to gather org configuration.\n"
-            "2. Call oscal_assess_assess to produce gap_analysis.json.\n"
-            "3. Call oscal_gap_map with the gap_analysis output to produce backlog.json.\n"
-            "4. Call sscf_benchmark_benchmark with the backlog to produce the SSCF scorecard.\n\n"
+            f"1. Call sfdc_connect_collect (org='{org}', scope='all') to gather org configuration.\n"
+            f"2. Call oscal_assess_assess (org='{org}') to produce gap_analysis.json.\n"
+            f"3. Call oscal_gap_map (org='{org}') with the gap_analysis output to produce backlog.json.\n"
+            f"4. Call sscf_benchmark_benchmark (org='{org}') with the backlog to produce the SSCF scorecard.\n"
+            f"5. Call report_gen_generate twice: once with audience='app-owner' (out ending in .md) "
+            f"and once with audience='gis' (out ending in .md), both using the backlog and sscf_benchmark paths.\n\n"
             "Return a final summary with: overall_score, overall_status (red/amber/green), "
             "count of critical/fail findings, and the top 3 remediation priorities."
         )

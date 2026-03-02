@@ -73,6 +73,7 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
         "input_schema": {
             "type": "object",
             "properties": {
+                "org": {"type": "string", "description": "Org alias for output directory naming — pass the same value used in sfdc_connect_collect"},
                 "collector_output": {
                     "type": "string",
                     "description": "Path to sfdc-connect collect output JSON (omit if dry_run=true)",
@@ -100,6 +101,7 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
         "input_schema": {
             "type": "object",
             "properties": {
+                "org": {"type": "string", "description": "Org alias for output directory naming — pass the same value used in sfdc_connect_collect"},
                 "gap_analysis": {
                     "type": "string",
                     "description": "Path to gap_analysis.json produced by oscal_assess_assess",
@@ -149,6 +151,7 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
         "input_schema": {
             "type": "object",
             "properties": {
+                "org": {"type": "string", "description": "Org alias for output directory naming — pass the same value used in sfdc_connect_collect"},
                 "backlog": {
                     "type": "string",
                     "description": "Path to backlog.json produced by oscal_gap_map",
