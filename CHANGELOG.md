@@ -11,6 +11,12 @@ This project follows a simple changelog format and semantic versioning intent:
 
 ## [Unreleased]
 
+### Fixed (2026-03-01 — post-dry-run bugs)
+- `harness/loop.py` — added `load_dotenv(_REPO / ".env")` so `ANTHROPIC_API_KEY` is loaded before API client init
+- `harness/memory.py` — added HuggingFace embedder fallback when `OPENAI_API_KEY` is absent (Mem0 was defaulting to OpenAI)
+- `harness/tools.py` — added `org` property to `oscal_assess_assess`, `oscal_gap_map`, `sscf_benchmark_benchmark` schemas; orchestrator can now pass org alias so artifacts land in `generated/<org>/` not `generated/unknown-org/`
+- `harness/loop.py` — default task prompt updated: passes `org` in every tool call, adds report generation as step 5, includes dry-run note to bypass orchestrator prompt quality gate
+
 ### Added (Phase 5 — 2026-03-01)
 - `scripts/gen_diagram.py` — Python diagrams-as-code script generating `docs/architecture.png`
 - `.github/workflows/diagram.yml` — GitHub Action that auto-regenerates the architecture diagram on push to main when skills/harness/scripts/agents/config change; commits back with `[skip ci]`
